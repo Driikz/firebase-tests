@@ -10,7 +10,9 @@
 </head>
 
 <body>
-  <button type="submit" form="form1" value="Submit" onClick="test();">Submit</button>
+  <button type="submit" onClick="add();">Add</button>
+  <button type="submit" onClick="findOne();">findOne</button>
+  <button type="submit" onClick="findAll();">findAll</button>
 
   <div id="textinput"></div>
 
@@ -27,32 +29,36 @@
     // Initialize Cloud Firestore through Firebase
     var db = firebase.firestore();
 
-    test = () => {
-      // db.collection("users").add({
-      //     first: "Ada",
-      //     last: "Lovelace",
-      //     born: 1815
-      //   })
-      //   .then(docRef => {
-      //     console.log("Document written with ID: ", docRef.id);
-      //     // document.getElementById('textinput').innerHTML = docRef.id;
-      //   })
-      //   .catch(error => {
-      //     console.error("Error adding document: ", error);
-      //   });
+    add = () => {
+      db.collection("users").add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815
+        })
+        .then(docRef => {
+          console.log("Document written with ID: ", docRef.id);
+          // document.getElementById('textinput').innerHTML = docRef.id;
+        })
+        .catch(error => {
+          console.error("Error adding document: ", error);
+        });
+    }
 
-      // let docRef = db.collection('users').doc('2pl4HeKUlPEg7HW9xijE');
-      // docRef.get().then(doc => {
-      //   if (doc.exists) {
-      //     document.getElementById('textinput').innerHTML = `<p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
-      //     console.log('Document data:', doc.data());
-      //   } else {
-      //     console.log('No such document!');
-      //   }
-      // }).catch(err => {
-      //   console.log('Error getting document:', err);
-      // });
+    findOne = () => {
+      let docRef = db.collection('users').doc('2pl4HeKUlPEg7HW9xijE');
+      docRef.get().then(doc => {
+        if (doc.exists) {
+          document.getElementById('textinput').innerHTML = `<p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
+          console.log('Document data:', doc.data());
+        } else {
+          console.log('No such document!');
+        }
+      }).catch(err => {
+        console.log('Error getting document:', err);
+      });
+    }
 
+    findAll = () => {
       db.collection("users").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
