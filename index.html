@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
+</head>
+
+<body>
+  <button type="submit" form="form1" value="Submit" onClick="test();">Submit</button>
+
+  <div id="textinput"></div>
+
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyAZUvDZxpX8yQEbuZXLS1fu5oVfOzSfc60",
+      authDomain: "test-project-2a.firebaseapp.com",
+      databaseURL: "https://test-project-2a.firebaseio.com",
+      projectId: "test-project-2a",
+      storageBucket: "test-project-2a.appspot.com",
+      messagingSenderId: "244195612180"
+    });
+
+    // Initialize Cloud Firestore through Firebase
+    var db = firebase.firestore();
+
+    test = () => {
+      // db.collection("users").add({
+      //     first: "Ada",
+      //     last: "Lovelace",
+      //     born: 1815
+      //   })
+      //   .then(docRef => {
+      //     console.log("Document written with ID: ", docRef.id);
+      //     // document.getElementById('textinput').innerHTML = docRef.id;
+      //   })
+      //   .catch(error => {
+      //     console.error("Error adding document: ", error);
+      //   });
+
+      // let docRef = db.collection('users').doc('2pl4HeKUlPEg7HW9xijE');
+      // docRef.get().then(doc => {
+      //   if (doc.exists) {
+      //     document.getElementById('textinput').innerHTML = `<p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
+      //     console.log('Document data:', doc.data());
+      //   } else {
+      //     console.log('No such document!');
+      //   }
+      // }).catch(err => {
+      //   console.log('Error getting document:', err);
+      // });
+
+      db.collection("users").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          let newDiv = document.createElement('div');
+          let newContent = document.createTextNode(`firstname: ${doc.data().first} - lastname: ${doc.data().last} - born: ${doc.data().born}`);
+          newDiv.appendChild(newContent);
+          document.body.insertBefore(newDiv, document.getElementById('textinput'));
+          console.log(doc.id, " => ", doc.data());
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>
