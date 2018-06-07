@@ -48,7 +48,7 @@
       let docRef = db.collection('users').doc('test');
       docRef.get().then(doc => {
         if (doc.exists) {
-          document.getElementById('textinput').innerHTML = `<p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
+          document.getElementById('textinput').innerHTML = `<h3>Doc id: ${docRef.id}</h2><p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
           console.log('Document data:', doc.data());
         } else {
           console.log('No such document!');
@@ -59,14 +59,15 @@
     }
 
     findAll = () => {
+      let i = 0;
       db.collection("users").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          // doc.data() is never undefined for query doc snapshots
           let newDiv = document.createElement('div');
-          let newContent = document.createTextNode(`firstname: ${doc.data().first} - lastname: ${doc.data().last} - born: ${doc.data().born}`);
+          let newContent = document.createTextNode(`${i} >     Doc id: ${doc.id} - firstname: ${doc.data().first} - lastname: ${doc.data().last} - born: ${doc.data().born}`);
           newDiv.appendChild(newContent);
           document.body.insertBefore(newDiv, document.getElementById('textinput'));
-          console.log(doc.id, " => ", doc.data());
+          // console.log(doc.id, " => ", doc.data());
+          i++;
         });
       });
     }
