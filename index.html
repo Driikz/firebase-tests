@@ -45,7 +45,7 @@
     }
 
     findOne = () => {
-      let docRef = db.collection('users').doc('2pl4HeKUlPEg7HW9xijE');
+      let docRef = db.collection('users').doc('test');
       docRef.get().then(doc => {
         if (doc.exists) {
           document.getElementById('textinput').innerHTML = `<p>firstname: ${doc.data().first}</p> <p>lastname: ${doc.data().last}</p> <p>born: ${doc.data().born}</p>`;
